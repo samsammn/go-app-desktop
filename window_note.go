@@ -155,7 +155,7 @@ func windowNote(w fyne.Window) func() {
 		notesHeader := container.NewBorder(nil, nil, nil, saveBtn, titleInput)
 		rightPanel := container.NewBorder(notesHeader, nil, nil, nil, editorAndPreview)
 
-		split := container.NewHSplit(leftPannel, rightPanel)
+		split := container.NewHSplit(padding(5, leftPannel), padding(5, rightPanel))
 		split.SetOffset(0.3)
 
 		w.SetContent(

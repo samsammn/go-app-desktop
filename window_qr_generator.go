@@ -142,20 +142,23 @@ func windowQRGenerator(w fyne.Window) func() {
 		left := container.NewVBox(
 			widget.NewLabelWithStyle("Configuration", fyne.TextAlignLeading, fyne.TextStyle{Bold: true}),
 			widget.NewSeparator(),
+			vPadding(10),
 			configs,
+			vPadding(10),
 			widget.NewSeparator(),
+			vPadding(10),
 			container.NewHBox(generateBtn, clearBtn),
 		)
 
-		scrollLeft := container.NewVScroll(left)
-		scrollLeft.SetMinSize(fyne.NewSize(150, 0))
-
 		imageCard := container.NewGridWrap(fyne.NewSize(300, 300), resultImage)
 
-		rightTop := container.NewBorder(nil, nil, nil, nil, widget.NewLabelWithStyle("Result", fyne.TextAlignLeading, fyne.TextStyle{Bold: true}))
-		right := container.NewBorder(rightTop, nil, nil, nil, container.NewCenter(imageCard))
+		resultLabel := widget.NewLabelWithStyle("Result", fyne.TextAlignLeading, fyne.TextStyle{Bold: true})
+		right := container.NewBorder(resultLabel, nil, nil, nil, container.NewCenter(imageCard))
 
-		split := container.NewHSplit(scrollLeft, right)
+		rightPanel := padding(10, right)
+		leftPanel := padding(15, left)
+
+		split := container.NewHSplit(leftPanel, rightPanel)
 		split.SetOffset(0.7)
 
 		w.SetContent(

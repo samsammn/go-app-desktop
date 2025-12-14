@@ -135,25 +135,27 @@ func windowStringGenerator(w fyne.Window) func() {
 			upperCheck,
 			digitCheck,
 			symbolCheck,
+			vPadding(10),
 			widget.NewSeparator(),
 			widget.NewLabelWithStyle("Options", fyne.TextAlignLeading, fyne.TextStyle{Bold: true}),
 			container.NewGridWithColumns(3,
 				widget.NewLabel("Length:"), lengthEntry, widget.NewLabel(""),
 				widget.NewLabel("Count:"), countEntry, widget.NewLabel(""),
 			),
+			vPadding(10),
 			widget.NewSeparator(),
+			vPadding(10),
 			container.NewHBox(generateBtn, clearBtn),
 			seedLabel,
 		)
 
-		scrollLeft := container.NewVScroll(left)
-		scrollLeft.SetMinSize(fyne.NewSize(150, 0))
+		resultLabel := widget.NewLabelWithStyle("Result", fyne.TextAlignLeading, fyne.TextStyle{Bold: true})
+		right := container.NewBorder(resultLabel, nil, nil, nil, container.NewScroll(resultArea))
 
-		// right panel: result + controls
-		rightTop := container.NewBorder(nil, nil, nil, nil, widget.NewLabelWithStyle("Result", fyne.TextAlignLeading, fyne.TextStyle{Bold: true}))
-		right := container.NewBorder(rightTop, nil, nil, nil, container.NewScroll(resultArea))
+		rightPanel := padding(10, right)
+		leftPanel := padding(15, left)
 
-		split := container.NewHSplit(scrollLeft, right)
+		split := container.NewHSplit(leftPanel, rightPanel)
 		split.SetOffset(0.2)
 
 		w.SetContent(

@@ -275,7 +275,7 @@ func windowEnvViewer(w fyne.Window) func() {
 			projectName.SetPlaceHolder("Enter Project Name")
 			projectPath.SetPlaceHolder("Enter .env location")
 
-			content := container.NewVBox(projectName, projectPath, setVPadding(10), container.NewHBox(btnInsert, btnCancel))
+			content := container.NewVBox(projectName, projectPath, vPadding(10), container.NewHBox(btnInsert, btnCancel))
 
 			grid := container.NewGridWrap(fyne.NewSize(300, 175), padding(20, content))
 

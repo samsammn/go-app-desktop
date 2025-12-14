@@ -12,9 +12,16 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func setVPadding(v float32) *canvas.Rectangle {
+func vPadding(v float32) *canvas.Rectangle {
 	padding := canvas.NewRectangle(color.Transparent)
 	padding.SetMinSize(fyne.NewSize(0, v))
+
+	return padding
+}
+
+func hPadding(v float32) *canvas.Rectangle {
+	padding := canvas.NewRectangle(color.Transparent)
+	padding.SetMinSize(fyne.NewSize(v, 0))
 
 	return padding
 }
@@ -118,9 +125,9 @@ func NewWelcomePanel(windowNote func(), windowTimeBreak func(), windowBase64 fun
 
 	panel := container.NewVBox(
 		container.NewCenter(header),
-		setVPadding(50),
+		vPadding(50),
 		widget.NewSeparator(),
-		setVPadding(20),
+		vPadding(20),
 		container.NewCenter(grid),
 	)
 
