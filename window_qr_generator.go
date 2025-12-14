@@ -126,7 +126,7 @@ func windowQRGenerator(w fyne.Window) func() {
 			textEntry.Refresh()
 		})
 
-		// shortcuts: Ctrl+G for generate, Ctrl+C for copy
+		// shortcuts: Ctrl+G for generate
 		if c := w.Canvas(); c != nil {
 			c.AddShortcut(&desktop.CustomShortcut{KeyName: fyne.KeyG, Modifier: fyne.KeyModifierControl}, func(fyne.Shortcut) {
 				generate()

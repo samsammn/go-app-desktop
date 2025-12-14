@@ -19,7 +19,17 @@ func setVPadding(v float32) *canvas.Rectangle {
 	return padding
 }
 
-func NewWelcomePanel(windowNote func(), windowTimeBreak func(), windowBase64 func(), windowStringGenerator func(), windowQRGenerator func()) fyne.CanvasObject {
+func padding(v float32, obj fyne.CanvasObject) *fyne.Container {
+	padding := canvas.NewRectangle(color.Transparent)
+	padding.SetMinSize(fyne.NewSize(v, v))
+
+	return container.NewBorder(
+		padding, padding, padding, padding,
+		obj,
+	)
+}
+
+func NewWelcomePanel(windowNote func(), windowTimeBreak func(), windowBase64 func(), windowStringGenerator func(), windowQRGenerator func(), windowEnvViewer func()) fyne.CanvasObject {
 	img := canvas.NewImageFromResource(theme.HomeIcon())
 	img.FillMode = canvas.ImageFillContain
 	img.SetMinSize(fyne.NewSize(100, 100))
@@ -87,10 +97,14 @@ func NewWelcomePanel(windowNote func(), windowTimeBreak func(), windowBase64 fun
 		}),
 	)
 
-	cardComingSoon := widget.NewCard(
-		"Coming Soon",
-		"Fitur-fitur menarik lainnya akan segera hadir!",
-		widget.NewButton("Open", func() {}),
+	cardEnvViewer := widget.NewCard(
+		"Env Viewer",
+		"Lihat .env yang ada pada setiap project local",
+		widget.NewButton("Open", func() {
+			if windowEnvViewer != nil {
+				windowEnvViewer()
+			}
+		}),
 	)
 
 	grid := container.NewGridWithColumns(3,
@@ -99,7 +113,7 @@ func NewWelcomePanel(windowNote func(), windowTimeBreak func(), windowBase64 fun
 		cardBase64,
 		cardString,
 		cardQRGenerator,
-		cardComingSoon,
+		cardEnvViewer,
 	)
 
 	panel := container.NewVBox(
@@ -120,6 +134,7 @@ func welcomes(w fyne.Window) fyne.CanvasObject {
 		windowBase64(w),
 		windowStringGenerator(w),
 		windowQRGenerator(w),
+		windowEnvViewer(w),
 	)
 
 	return welcome
@@ -137,14 +152,6 @@ func windowBase64(w fyne.Window) func() {
 	return func() {
 		w.SetContent(
 			container.NewBorder(toolbars(w), nil, nil, nil, widget.NewLabel("Base64 Manager")),
-		)
-	}
-}
-
-func windowQRGenerator2(w fyne.Window) func() {
-	return func() {
-		w.SetContent(
-			container.NewBorder(toolbars(w), nil, nil, nil, widget.NewLabel("QR Generator")),
 		)
 	}
 }
